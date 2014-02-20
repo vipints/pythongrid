@@ -214,6 +214,7 @@ class KybJob(Job):
         """
         Job.__init__(self, f, args, kwlist, param=param, cleanup=cleanup)
         self.h_vmem = ""
+        self.s_vmem = ""
         self.arch = ""
         self.tmpfree = ""
         self.h_cpu = ""
@@ -262,6 +263,11 @@ class KybJob(Job):
             if h_mem != self.h_vmem:
                 print "Warning:", self.h_vmem, "replaced by", h_mem, " for native spec!"
             ret = ret + " -l " + "h_vmem" + "=" + str(self.h_vmem)
+        if (self.s_vmem != ""):
+            s_mem = re.sub("(\d+)\.?\d*(\w)", "\g<1>\g<2>", self.s_vmem)
+            if s_mem != self.s_vmem:
+                print "Warning:", self.s_vmem, "replaced by", s_mem, " for native spec!"
+            ret = ret + " -l " + "s_vmem" + "=" + str(self.s_vmem)
         if (self.arch != ""):
             ret = ret + " -l " + "arch" + "=" + str(self.arch)
         if (self.tmpfree != ""):
